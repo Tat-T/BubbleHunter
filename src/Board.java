@@ -14,34 +14,35 @@ public class Board extends JPanel {
     Board() {
         this.player = new Player(
                 BubbleHunter.WIDTH / 2,
-                BubbleHunter.HEIGHT / 2
-        );
+                BubbleHunter.HEIGHT / 2);
         this.bubbles = new ArrayList<>();
-    
+
         for (int i = 0; i < BUBBLE_COUNT; i++) {
             bubbles.add(new Bubble(BubbleHunter.WIDTH, BubbleHunter.HEIGHT));
         }
-    
+
         setFocusable(true); // Делаем панель активной для клавиатуры
         requestFocusInWindow(); // Запрашиваем фокус
-    
+
         addKeyListener(new KeyListener() {
             @Override
-            public void keyTyped(KeyEvent e) {}
-    
+            public void keyTyped(KeyEvent e) {
+            }
+
             @Override
             public void keyPressed(KeyEvent e) {
                 player.move(e.getKeyCode());
                 repaint();
             }
-    
+
             @Override
-            public void keyReleased(KeyEvent e) {}
+            public void keyReleased(KeyEvent e) {
+            }
         });
-    
+
         Timer timer = new Timer(10, e -> update());
         timer.start();
-    }    
+    }
 
     private void update() {
 
@@ -49,6 +50,11 @@ public class Board extends JPanel {
         while (iter.hasNext()) {
             Bubble bubble = iter.next();
             bubble.move();
+            // Проверяем столкновение с игроком
+            if (player.intersects(bubble)) {
+                iter.remove(); // Удаляем пузырь
+                continue; // Переходим к следующему
+            }
             if (bubble.isOffScreen()) {
                 iter.remove();
                 bubbles.add(new Bubble(BubbleHunter.WIDTH, BubbleHunter.HEIGHT));

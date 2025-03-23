@@ -32,4 +32,19 @@ public class Player {
             y += speed;
         }
     }
+
+    public boolean intersects(Bubble bubble) {
+        int bubbleCenterX = bubble.getX();
+        int bubbleCenterY = bubble.getY();
+        int bubbleRadius = bubble.getSize() / 2;
+    
+        // Проверяем, находится ли пузырь внутри треугольника игрока
+        int dx = bubbleCenterX - x;
+        int dy = bubbleCenterY - y;
+        int distance = (int) Math.sqrt(dx * dx + dy * dy);
+    
+        // Если расстояние меньше суммы радиусов - столкновение
+        return distance < bubbleRadius + SIZE / 2;
+    }
+    
 }

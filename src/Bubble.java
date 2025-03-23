@@ -32,6 +32,18 @@ public class Bubble {
         return y + size < 0;
     }
 
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
+    }
+    
+    public int getSize() {
+        return size;
+    }
+
     private void resetPosition() {
         this.y = BubbleHunter.HEIGHT + this.size; // Перемещаем под экран
         this.x = new Random().nextInt(BubbleHunter.WIDTH); // Новый X
