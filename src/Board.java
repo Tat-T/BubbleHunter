@@ -10,6 +10,7 @@ public class Board extends JPanel {
     private final Player player;
     private final List<Bubble> bubbles;
     private static final int BUBBLE_COUNT = 10;
+    private int score = 0;
 
     Board() {
         this.player = new Player(
@@ -53,6 +54,7 @@ public class Board extends JPanel {
             // Проверяем столкновение с игроком
             if (player.intersects(bubble)) {
                 iter.remove(); // Удаляем пузырь
+                score++;
                 continue; // Переходим к следующему
             }
             if (bubble.isOffScreen()) {
@@ -70,5 +72,14 @@ public class Board extends JPanel {
         for (Bubble bubble : bubbles) {
             bubble.draw(g);
         }
+
+         // Рисуем счёт
+         drawScore(g);
+    }
+
+    private void drawScore(Graphics g) {
+        g.setColor(Color.BLACK);
+        g.setFont(new Font("Arial", Font.BOLD, 20));
+        g.drawString("Счёт: " + score, 20, 40); // Позиция счёта на экране
     }
 }
